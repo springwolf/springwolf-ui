@@ -971,7 +971,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       selectors: [["app-header"]],
       decls: 8,
       vars: 0,
-      consts: [["color", "primary", "fxLayout", "", "fxLayoutAlign", "space-between center"], ["fxLayout", "", "fxLayoutAlign", "center center", "fxLayoutGap", "16px"], ["href", "https://www.asyncapi.com"], ["src", "../../assets/asyncapi-logo.png", "alt", "AsyncAPI logo", 1, "logo"], ["href", "https://github.com/stavshamir/springwolf"], [1, "fa", "fa-github", "fa-2x"]],
+      consts: [["color", "primary", "fxLayout", "", "fxLayoutAlign", "space-between center"], ["fxLayout", "", "fxLayoutAlign", "center center", "fxLayoutGap", "16px"], ["href", "https://www.asyncapi.com"], ["src", "https://springwolf.github.io/springwolf-ui/assets/asyncapi-logo.png", "alt", "AsyncAPI logo", 1, "logo"], ["href", "https://github.com/stavshamir/springwolf"], [1, "fa", "fa-github", "fa-2x"]],
       template: function HeaderComponent_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "mat-toolbar", 0);
