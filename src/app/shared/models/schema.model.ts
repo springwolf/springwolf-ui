@@ -1,9 +1,10 @@
 import { Example } from './example.model';
 
 export interface Schema {
-    description?: String;
-    type: String;
+    description?: string;
+    type: string;
     properties?: Map<string, Schema>;
     example: Example;
     required?: string[];
 }
+
