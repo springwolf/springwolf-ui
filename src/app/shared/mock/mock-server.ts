@@ -4,9 +4,9 @@ import mockSpringwolfAmqp from './mock.springwolf-amqp-example.json';
 import mockSpringwolfKafka from './mock.springwolf-kafka-example.json';
 
 const mockAsyncApi = {
-  ...mockSpringwolfApp,
-  ...mockSpringwolfAmqp,
-  ...mockSpringwolfKafka,
+  "Springwolf UI Demo": mockSpringwolfApp,
+  "Springwolf example project - AMQP": mockSpringwolfAmqp,
+  "Springwolf example project - Kafka": mockSpringwolfKafka,
 }
 
 export class MockServer implements InMemoryDbService {
