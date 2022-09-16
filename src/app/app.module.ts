@@ -20,6 +20,10 @@ import { MockServer } from './shared/mock/mock-server';
 import { PublisherService } from './shared/publisher.service';
 import { FormsModule } from '@angular/forms';
 import { JsonComponent } from './shared/components/json/json.component';
+import {MockDocsEndpointService} from "./shared/mock/mock-endpoint.service";
+import {DocEndpointsService} from './shared/docs-endpoint/doc-endpoints.service';
+import {EndpointService} from "./shared/endpoint.service";
+import {SpringwolfDocsEndpointService} from "./shared/docs-endpoint/springwolf-docs-endpoint.service";
 
 @NgModule({
   declarations: [
@@ -53,7 +57,9 @@ import { JsonComponent } from './shared/components/json/json.component';
           return { typescript: () => import('highlight.js/lib/languages/typescript') };
         }
       }
-    }
+    },
+    EndpointService,
+    { provide: DocEndpointsService, useClass: environment.production ? SpringwolfDocsEndpointService : MockDocsEndpointService},
   ],
   bootstrap: [AppComponent]
 })

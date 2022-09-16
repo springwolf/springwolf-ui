@@ -4,10 +4,10 @@ import { Channel, Message, Operation } from './models/channel.model';
 import { Schema } from './models/schema.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
+import { forkJoin, Observable, of, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Info } from './models/info.model';
-import { Endpoints } from './endpoints';
+import { EndpointService } from './endpoint.service';
 
 interface ServerAsyncApi {
     asyncapi: string;
@@ -42,7 +42,7 @@ export class AsyncApiService {
     private nameSubject: Subject<string>;
     private docs: Map<string, AsyncApi>;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private endpoints: EndpointService) {
         this.nameSubject = new Subject<string>();
     }
 
@@ -59,16 +59,11 @@ export class AsyncApiService {
             return of(this.docs);
         }
 
-        return this.http.get<Map<string, ServerAsyncApi>>(Endpoints.docs).pipe(map(item => {
-            this.docs = this.toAsyncApiMap(item);
-            return this.docs;
-        }));
-    }
+        const httpObservables = this.endpoints.getDocEndpointUrls().map(url => this.http.get<ServerAsyncApi>(url));
 
-    toAsyncApiMap(response: Map<string, ServerAsyncApi>): Map<string, AsyncApi> {
-        const docs = new Map<string, AsyncApi>();
-        Object.entries(response).forEach(([docName, doc]) => docs.set(docName, this.toAsyncApi(doc)));
-        return docs;
+        return forkJoin(httpObservables)
+          .pipe(map(item => new Map(item.map(asyncApi => {return [asyncApi.info.title, this.toAsyncApi(asyncApi)]}))))
+          .pipe(map(item => this.docs = item))
     }
 
     toAsyncApi(item: ServerAsyncApi): AsyncApi {
