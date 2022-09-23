@@ -590,15 +590,15 @@
   /***/
   function _(module, exports, __webpack_require__) {
     __webpack_require__(
-    /*! /home/stav/springwolf/springwolf-ui/node_modules/@angular/material/prebuilt-themes/indigo-pink.css */
+    /*! /home/runner/work/springwolf-ui/springwolf-ui/node_modules/@angular/material/prebuilt-themes/indigo-pink.css */
     "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css");
 
     __webpack_require__(
-    /*! /home/stav/springwolf/springwolf-ui/node_modules/font-awesome/css/font-awesome.min.css */
+    /*! /home/runner/work/springwolf-ui/springwolf-ui/node_modules/font-awesome/css/font-awesome.min.css */
     "./node_modules/font-awesome/css/font-awesome.min.css");
 
     module.exports = __webpack_require__(
-    /*! /home/stav/springwolf/springwolf-ui/src/styles.css */
+    /*! /home/runner/work/springwolf-ui/springwolf-ui/src/styles.css */
     "./src/styles.css");
     /***/
   }
