@@ -3,6 +3,7 @@ plugins {
   id 'com.github.node-gradle.node' version '2.2.4'
   id 'signing'
   id 'maven-publish'
+  id "com.diffplug.spotless" version "6.11.0"
 }
 
 def isSnapshot = Boolean.valueOf(project.findProperty('SNAPSHOT'))
@@ -18,6 +19,8 @@ node {
 }
 
 npm_run_build {
+  dependsOn spotlessCheck
+
   inputs.files fileTree("src")
   inputs.file 'angular.json'
   inputs.file 'package.json'
@@ -97,3 +100,14 @@ signing {
   sign publishing.publications.mavenJava
 }
 
+spotless {
+  encoding 'UTF-8'
+
+  format 'Angular', {
+    target 'src/**/*.ts', 'src/**/*.css', 'src/**/*.html'
+
+    trimTrailingWhitespace()
+    endWithNewline()
+    prettier().config(["singleQuote": true])
+  }
+}

@@ -27,6 +27,11 @@ It contains multiple mocks - including the ones from the springwolf-core example
 
 To update the mock data, run `npm run update-mocks`.
 
+### Code Formatting
+
+The project uses spotless together with prettier for code formatting.
+Using the gradle task `spotlessApply`, the code is reformatted to match the style.
+
 ## Release
 
 Releasing is done by running the gradle task `publish`. For local development, use `publishToMavenLocal`.
