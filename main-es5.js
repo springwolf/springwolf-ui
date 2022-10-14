@@ -2315,13 +2315,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 k = _ref6[0],
                 v = _ref6[1];
 
-            var subscriberChannels = _this10.mapChannel(k, v.description, v.subscribe, " consumer");
+            var subscriberChannels = _this10.mapChannel(k, v.description, v.subscribe, " subscribe");
 
             subscriberChannels.forEach(function (channel) {
               return s.push(channel);
             });
 
-            var publisherChannels = _this10.mapChannel(k, v.description, v.publish, " producer");
+            var publisherChannels = _this10.mapChannel(k, v.description, v.publish, " publish");
 
             publisherChannels.forEach(function (channel) {
               return s.push(channel);
