@@ -654,7 +654,7 @@ class InfoComponent {
     }
 }
 InfoComponent.ɵfac = function InfoComponent_Factory(t) { return new (t || InfoComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_asyncapi_service__WEBPACK_IMPORTED_MODULE_1__["AsyncApiService"])); };
-InfoComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: InfoComponent, selectors: [["app-info"]], decls: 7, vars: 3, consts: [["href", "#", 3, "click"], [4, "ngIf"]], template: function InfoComponent_Template(rf, ctx) { if (rf & 1) {
+InfoComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: InfoComponent, selectors: [["app-info"]], decls: 7, vars: 3, consts: [["href", "javascript:void(0);", 3, "click"], [4, "ngIf"]], template: function InfoComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "h1");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -822,8 +822,11 @@ function SchemaComponent_tr_2_span_6_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } if (rf & 2) {
     const property_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]().$implicit;
+    const ctx_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+    var tmp_0_0 = null;
+    const currVal_0 = ctx_r4.getSchemaUrl(property_r1.value["$ref"] == null ? null : (tmp_0_0 = property_r1.value["$ref"].split("/")) == null ? null : tmp_0_0.pop());
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("href", "#" + property_r1.value["$ref"].split("/").pop(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("href", currVal_0, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](property_r1.value["$ref"]);
 } }
@@ -902,6 +905,14 @@ function SchemaComponent_tr_2_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", property_r1.value.enum);
 } }
 class SchemaComponent {
+    getSchemaUrl(fragment) {
+        let baseUrl = window.location.href;
+        const lastHashPosition = baseUrl.lastIndexOf('#');
+        if (lastHashPosition >= 0) {
+            baseUrl = baseUrl.substring(0, lastHashPosition);
+        }
+        return baseUrl + '#' + fragment;
+    }
 }
 SchemaComponent.ɵfac = function SchemaComponent_Factory(t) { return new (t || SchemaComponent)(); };
 SchemaComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: SchemaComponent, selectors: [["app-schema"]], inputs: { schema: "schema" }, decls: 4, vars: 3, consts: [[1, "schema"], [4, "ngFor", "ngForOf"], [1, "key"], ["class", "required", 4, "ngIf"], ["class", "type", 4, "ngIf"], ["class", "format", 4, "ngIf"], [1, "description"], ["class", "example", 4, "ngIf"], ["placeholder", "Enum", 4, "ngIf"], [1, "required"], [1, "type"], [3, "href"], [1, "format"], [1, "example"], ["placeholder", "Enum"], [3, "value", 4, "ngFor", "ngForOf"], [3, "value"]], template: function SchemaComponent_Template(rf, ctx) { if (rf & 1) {

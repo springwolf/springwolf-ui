@@ -1349,7 +1349,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       selectors: [["app-info"]],
       decls: 7,
       vars: 3,
-      consts: [["href", "#", 3, "click"], [4, "ngIf"]],
+      consts: [["href", "javascript:void(0);", 3, "click"], [4, "ngIf"]],
       template: function InfoComponent_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "h1");
@@ -1632,9 +1632,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       if (rf & 2) {
         var property_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]().$implicit;
 
+        var ctx_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+
+        var tmp_0_0 = null;
+        var currVal_0 = ctx_r4.getSchemaUrl(property_r1.value["$ref"] == null ? null : (tmp_0_0 = property_r1.value["$ref"].split("/")) == null ? null : tmp_0_0.pop());
+
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("href", "#" + property_r1.value["$ref"].split("/").pop(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("href", currVal_0, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
@@ -1790,9 +1795,27 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }
     }
 
-    var SchemaComponent = function SchemaComponent() {
-      _classCallCheck(this, SchemaComponent);
-    };
+    var SchemaComponent = /*#__PURE__*/function () {
+      function SchemaComponent() {
+        _classCallCheck(this, SchemaComponent);
+      }
+
+      _createClass(SchemaComponent, [{
+        key: "getSchemaUrl",
+        value: function getSchemaUrl(fragment) {
+          var baseUrl = window.location.href;
+          var lastHashPosition = baseUrl.lastIndexOf('#');
+
+          if (lastHashPosition >= 0) {
+            baseUrl = baseUrl.substring(0, lastHashPosition);
+          }
+
+          return baseUrl + '#' + fragment;
+        }
+      }]);
+
+      return SchemaComponent;
+    }();
 
     SchemaComponent.ɵfac = function SchemaComponent_Factory(t) {
       return new (t || SchemaComponent)();
