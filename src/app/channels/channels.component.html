@@ -4,12 +4,13 @@
         <mat-expansion-panel-header>
             <mat-panel-title fxLayout fxLayoutAlign="flex-start center" fxLayoutGap="16px">
                 <div class="operation-badge">{{ channel.operation.type }}</div>
+                <i class="fa {{channel.operation.type == 'kafka publish' ? 'fa-arrow-circle-down' : 'fa-arrow-circle-up'}}"></i>
                 <h3>{{ channel.name }}</h3>
                 <div class="payload-name">{{ channel.operation.message.title }}</div>
             </mat-panel-title>
         </mat-expansion-panel-header>
-        <app-channel-main 
-            [channelName]="channel.name" 
+        <app-channel-main
+            [channelName]="channel.name"
             [operation]="channel.operation"
             [docName]="docName">
         </app-channel-main>
