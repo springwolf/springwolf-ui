@@ -1,8 +1,8 @@
 {
-  "Springwolf Demo": {
+  "Springwolf UI Demo": {
     "asyncapi": "2.0.0",
     "info": {
-      "title": "Springwolf Demo",
+      "title": "Springwolf UI Demo",
       "description": "This is a demo project for springwolf that shows how the UI looks like and functions.",
       "version": "1.0.0"
     },
@@ -28,13 +28,39 @@
           "message": {
             "name": "io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto",
             "title": "AnotherPayloadDto",
+            "description": "Custom, optional description for this message",
             "payload": {
               "$ref": "#/components/schemas/AnotherPayloadDto"
+            },
+            "headers": {
+              "$ref": "#/components/schemas/NoHeaders"
             }
           }
         }
       },
       "example-producer-topic": {
+        "publish": {
+          "bindings": {
+            "kafka": {
+              "groupId": {
+                "type": "string",
+                "enum": [
+                  "example-group-id"
+                ]
+              }
+            }
+          },
+          "message": {
+            "name": "io.github.stavshamir.springwolf.example.dtos.ExamplePayloadDto",
+            "title": "ExamplePayloadDto",
+            "payload": {
+              "$ref": "#/components/schemas/ExamplePayloadDto"
+            },
+            "headers": {
+              "$ref": "#/components/schemas/NoHeaders"
+            }
+          }
+        },
         "subscribe": {
           "bindings": {
             "kafka": {}
@@ -44,6 +70,9 @@
             "title": "ExamplePayloadDto",
             "payload": {
               "$ref": "#/components/schemas/ExamplePayloadDto"
+            },
+            "headers": {
+              "$ref": "#/components/schemas/NoHeaders"
             }
           }
         }
@@ -58,8 +87,12 @@
               {
                 "name": "io.github.stavshamir.springwolf.example.dtos.ExamplePayloadDto",
                 "title": "ExamplePayloadDto",
+                "description": "Custom, optional description for this message",
                 "payload": {
                   "$ref": "#/components/schemas/ExamplePayloadDto"
+                },
+                "headers": {
+                  "$ref": "#/components/schemas/SpringDefaultHeaders"
                 }
               },
               {
@@ -67,6 +100,9 @@
                 "title": "AnotherPayloadDto",
                 "payload": {
                   "$ref": "#/components/schemas/AnotherPayloadDto"
+                },
+                "headers": {
+                  "$ref": "#/components/schemas/NoHeaders"
                 }
               }
             ]
@@ -126,91 +162,31 @@
               "someEnum": "FOO1"
             }
           }
-        }
-      }
-    }
-  },
-  "Springwolf Demo Other App": {
-    "asyncapi": "2.0.0",
-    "info": {
-      "title": "Springwolf Demo Other App",
-      "description": "This is a different demo project for springwolf that shows how the UI looks like and functions with multiple docs.",
-      "version": "1.0.0"
-    },
-    "servers": {
-      "kafka": {
-        "url": "kafka:29092",
-        "protocol": "kafka"
-      }
-    },
-    "channels": {
-      "a-different-topic": {
-        "publish": {
-          "bindings": {
-            "kafka": {
-              "groupId": {
-                "type": "string",
-                "enum": [
-                  "example-group-id"
-                ]
-              }
-            }
-          },
-          "message": {
-            "name": "io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto",
-            "title": "AnotherPayloadDto",
-            "payload": {
-              "$ref": "#/components/schemas/AnotherPayloadDto"
-            }
-          }
-        }
-      }
-    },
-    "components": {
-      "schemas": {
-        "ExamplePayloadDto": {
+        },
+        "NoHeaders": {
+          "type": "object",
+          "exampleSetFlag": true
+        },
+        "SpringDefaultHeaders": {
           "type": "object",
           "properties": {
-            "someString": {
-              "type": "string"
-            },
-            "someLong": {
-              "type": "integer",
-              "format": "int64"
-            },
-            "someEnum": {
+            "__TypeId__": {
               "type": "string",
+              "example": "io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto",
+              "exampleSetFlag": true,
               "enum": [
-                "FOO1"
+                "io.github.stavshamir.springwolf.example.dtos.ExamplePayloadDto",
+                "io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto"
               ]
             }
           },
           "example": {
-            "someString": "string",
-            "someLong": 0,
-            "someEnum": "FOO1"
-          }
-        },
-        "AnotherPayloadDto": {
-          "type": "object",
-          "properties": {
-            "foo": {
-              "type": "string"
-            },
-            "example": {
-              "$ref": "#/components/schemas/ExamplePayloadDto"
-            }
+            "__TypeId__": "io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto"
           },
-          "example": {
-            "foo": "string",
-            "example": {
-              "someString": "string",
-              "someLong": 0,
-              "someEnum": "FOO1"
-            }
-          }
+          "exampleSetFlag": true
         }
       }
     }
   }
 }
+

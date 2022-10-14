@@ -5,8 +5,10 @@ plugins {
   id 'maven-publish'
 }
 
+def isSnapshot = Boolean.valueOf(project.findProperty('SNAPSHOT'))
+
 group = 'io.github.springwolf'
-version = '0.5.0' + (Boolean.valueOf(System.getProperty('snapshot')) ? '-SNAPSHOT' : '')
+version = '0.6.0' + (isSnapshot ? '-SNAPSHOT' : '')
 sourceCompatibility = '1.8'
 
 node {
@@ -40,6 +42,8 @@ artifacts {
 
 signing {
   sign configurations.archives
+
+  useInMemoryPgpKeys project.findProperty("SIGNINGKEY"), project.findProperty("SIGNINGPASSWORD")
 }
 
 def pomConfig = {
@@ -84,6 +88,7 @@ publishing {
 
         def pomFile = file("${project.buildDir}/generated-pom.xml")
         writeTo(pomFile)
+
         def pomAscFile = signing.sign(pomFile).signatureFiles[0]
         artifact(pomAscFile) {
           classifier = null
@@ -107,10 +112,12 @@ publishing {
 
   repositories {
     maven {
-      url 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+      def releasesRepoUrl  = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+      def snapshotsRepoUrl = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+      url = isSnapshot ? snapshotsRepoUrl : releasesRepoUrl
       credentials {
-        username = project.findProperty('ossrhUsername') ?: ''
-        password = project.findProperty('ossrhPassword') ?: ''
+        username = project.findProperty('MAVEN_USERNAME') ?: ''
+        password = project.findProperty('MAVEN_PASSWORD') ?: ''
       }
     }
   }
