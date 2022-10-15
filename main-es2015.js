@@ -284,7 +284,7 @@ class ChannelMainComponent {
     }
     ngOnInit() {
         this.asyncApiService.getAsyncApis().subscribe(asyncapi => {
-            let schemas = asyncapi.get(this.docName).components.schemas;
+            let schemas = asyncapi.components.schemas;
             this.schemaName = this.operation.message.payload.$ref.slice(this.operation.message.payload.$ref.lastIndexOf('/') + 1);
             this.schema = schemas[this.schemaName];
             this.defaultExample = new src_app_shared_models_example_model__WEBPACK_IMPORTED_MODULE_1__["Example"](this.schema.example);
@@ -521,11 +521,8 @@ class ChannelsComponent {
     }
     ngOnInit() {
         this.location.subscribe(() => this.setChannelSelectionFromLocation());
-        this.nameSubscription = this.asyncApiService.getCurrentAsyncApiName().subscribe(name => {
-            this.docName = name;
-            this.asyncApiService.getAsyncApis().subscribe(asyncapi => {
-                this.channels = this.sortChannels(asyncapi.get(name).channels);
-            });
+        this.asyncApiService.getAsyncApis().subscribe(asyncapi => {
+            this.channels = this.sortChannels(asyncapi.channels);
         });
     }
     sortChannels(channels) {
@@ -593,78 +590,25 @@ ChannelsComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefine
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HeaderComponent", function() { return HeaderComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
-/* harmony import */ var src_app_shared_asyncapi_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/shared/asyncapi.service */ "./src/app/shared/asyncapi.service.ts");
-/* harmony import */ var _angular_material_toolbar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/material/toolbar */ "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/toolbar.js");
-/* harmony import */ var _angular_flex_layout_flex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/flex-layout/flex */ "./node_modules/@angular/flex-layout/__ivy_ngcc__/esm2015/flex.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/__ivy_ngcc__/fesm2015/forms.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
+/* harmony import */ var _angular_material_toolbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/material/toolbar */ "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/toolbar.js");
+/* harmony import */ var _angular_flex_layout_flex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/flex-layout/flex */ "./node_modules/@angular/flex-layout/__ivy_ngcc__/esm2015/flex.js");
 
 
 
 
-
-
-
-function HeaderComponent_option_7_Template(rf, ctx) { if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "option", 7);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-} if (rf & 2) {
-    const doc_r1 = ctx.$implicit;
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngValue", doc_r1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](doc_r1);
-} }
 class HeaderComponent {
-    constructor(asyncApiService) {
-        this.asyncApiService = asyncApiService;
-        this.location = window.location;
-        this.selectedDocument = new URLSearchParams(window.location.search).get(HeaderComponent.URL_SEARCH_DOCUMENT_PARAM);
-    }
-    ngOnInit() {
-        this.asyncApiService.getAsyncApis().subscribe(docsMap => {
-            this.documents = [...docsMap.keys()];
-            if (!this.documents.includes(this.selectedDocument)) {
-                this.selectedDocument = this.documents[0];
-            }
-            this.asyncApiService.setCurrentAsyncApiName(this.selectedDocument);
-        });
-    }
-    get selectedDocumentMod() {
-        return this.selectedDocument;
-    }
-    set selectedDocumentMod(value) {
-        let updatedSearchParams = new URLSearchParams(window.location.search);
-        updatedSearchParams.set(HeaderComponent.URL_SEARCH_DOCUMENT_PARAM, value);
-        this.location.search = updatedSearchParams.toString();
-    }
 }
-HeaderComponent.URL_SEARCH_DOCUMENT_PARAM = "document";
-HeaderComponent.ɵfac = function HeaderComponent_Factory(t) { return new (t || HeaderComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_shared_asyncapi_service__WEBPACK_IMPORTED_MODULE_1__["AsyncApiService"])); };
-HeaderComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: HeaderComponent, selectors: [["app-header"]], decls: 10, vars: 2, consts: [["color", "primary", "fxLayout", "", "fxLayoutAlign", "space-between center"], ["fxLayout", "", "fxLayoutAlign", "center center", "fxLayoutGap", "16px"], [3, "ngModel", "ngModelChange"], ["disabled", ""], [3, "ngValue", 4, "ngFor", "ngForOf"], ["href", "https://github.com/stavshamir/springwolf"], [1, "fa", "fa-github", "fa-2x"], [3, "ngValue"]], template: function HeaderComponent_Template(rf, ctx) { if (rf & 1) {
+HeaderComponent.ɵfac = function HeaderComponent_Factory(t) { return new (t || HeaderComponent)(); };
+HeaderComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: HeaderComponent, selectors: [["app-header"]], decls: 5, vars: 0, consts: [["color", "primary", "fxLayout", "", "fxLayoutAlign", "space-between center"], ["href", "https://github.com/stavshamir/springwolf"], [1, "fa", "fa-github", "fa-2x"]], template: function HeaderComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "mat-toolbar", 0);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "h2");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3, "springwolf");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "h2");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, "springwolf");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "select", 2);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function HeaderComponent_Template_select_ngModelChange_4_listener($event) { return ctx.selectedDocumentMod = $event; });
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "option", 3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](6, "Choose a doc");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](7, HeaderComponent_option_7_Template, 2, 2, "option", 4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "a", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](4, "i", 2);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "a", 5);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](9, "i", 6);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    } if (rf & 2) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx.selectedDocumentMod);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.documents);
-    } }, directives: [_angular_material_toolbar__WEBPACK_IMPORTED_MODULE_2__["MatToolbar"], _angular_flex_layout_flex__WEBPACK_IMPORTED_MODULE_3__["DefaultLayoutDirective"], _angular_flex_layout_flex__WEBPACK_IMPORTED_MODULE_3__["DefaultLayoutAlignDirective"], _angular_flex_layout_flex__WEBPACK_IMPORTED_MODULE_3__["DefaultLayoutGapDirective"], _angular_forms__WEBPACK_IMPORTED_MODULE_4__["SelectControlValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_4__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_4__["NgModel"], _angular_forms__WEBPACK_IMPORTED_MODULE_4__["NgSelectOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_4__["ɵangular_packages_forms_forms_x"], _angular_common__WEBPACK_IMPORTED_MODULE_5__["NgForOf"]], styles: [".logo[_ngcontent-%COMP%] {\n    height: 24px;\n    display:block;\n}\n\na[_ngcontent-%COMP%] {\n    text-decoration: none;\n    color: white;\n}\n\na[_ngcontent-%COMP%]:hover {\n    color: lightgray;\n}\n\n.select-doc[_ngcontent-%COMP%] {\n    width: 200px;\n    height: 24px;\n    display:block;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvaGVhZGVyL2hlYWRlci5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0lBQ0ksWUFBWTtJQUNaLGFBQWE7QUFDakI7O0FBRUE7SUFDSSxxQkFBcUI7SUFDckIsWUFBWTtBQUNoQjs7QUFFQTtJQUNJLGdCQUFnQjtBQUNwQjs7QUFFQTtJQUNJLFlBQVk7SUFDWixZQUFZO0lBQ1osYUFBYTtBQUNqQiIsImZpbGUiOiJzcmMvYXBwL2hlYWRlci9oZWFkZXIuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5sb2dvIHtcbiAgICBoZWlnaHQ6IDI0cHg7XG4gICAgZGlzcGxheTpibG9jaztcbn1cblxuYSB7XG4gICAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICAgIGNvbG9yOiB3aGl0ZTtcbn1cblxuYTpob3ZlciB7XG4gICAgY29sb3I6IGxpZ2h0Z3JheTtcbn1cblxuLnNlbGVjdC1kb2Mge1xuICAgIHdpZHRoOiAyMDBweDtcbiAgICBoZWlnaHQ6IDI0cHg7XG4gICAgZGlzcGxheTpibG9jaztcbn0iXX0= */"] });
+    } }, directives: [_angular_material_toolbar__WEBPACK_IMPORTED_MODULE_1__["MatToolbar"], _angular_flex_layout_flex__WEBPACK_IMPORTED_MODULE_2__["DefaultLayoutDirective"], _angular_flex_layout_flex__WEBPACK_IMPORTED_MODULE_2__["DefaultLayoutAlignDirective"]], styles: [".logo[_ngcontent-%COMP%] {\n    height: 24px;\n    display:block;\n}\n\na[_ngcontent-%COMP%] {\n    text-decoration: none;\n    color: white;\n}\n\na[_ngcontent-%COMP%]:hover {\n    color: lightgray;\n}\n\n.select-doc[_ngcontent-%COMP%] {\n    width: 200px;\n    height: 24px;\n    display:block;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvaGVhZGVyL2hlYWRlci5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0lBQ0ksWUFBWTtJQUNaLGFBQWE7QUFDakI7O0FBRUE7SUFDSSxxQkFBcUI7SUFDckIsWUFBWTtBQUNoQjs7QUFFQTtJQUNJLGdCQUFnQjtBQUNwQjs7QUFFQTtJQUNJLFlBQVk7SUFDWixZQUFZO0lBQ1osYUFBYTtBQUNqQiIsImZpbGUiOiJzcmMvYXBwL2hlYWRlci9oZWFkZXIuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5sb2dvIHtcbiAgICBoZWlnaHQ6IDI0cHg7XG4gICAgZGlzcGxheTpibG9jaztcbn1cblxuYSB7XG4gICAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICAgIGNvbG9yOiB3aGl0ZTtcbn1cblxuYTpob3ZlciB7XG4gICAgY29sb3I6IGxpZ2h0Z3JheTtcbn1cblxuLnNlbGVjdC1kb2Mge1xuICAgIHdpZHRoOiAyMDBweDtcbiAgICBoZWlnaHQ6IDI0cHg7XG4gICAgZGlzcGxheTpibG9jaztcbn0iXX0= */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](HeaderComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
@@ -672,7 +616,7 @@ HeaderComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCo
                 templateUrl: './header.component.html',
                 styleUrls: ['./header.component.css']
             }]
-    }], function () { return [{ type: src_app_shared_asyncapi_service__WEBPACK_IMPORTED_MODULE_1__["AsyncApiService"] }]; }, null); })();
+    }], null, null); })();
 
 
 /***/ }),
@@ -708,11 +652,9 @@ class InfoComponent {
         this.asyncApiService = asyncApiService;
     }
     ngOnInit() {
-        this.nameSubscription = this.asyncApiService.getCurrentAsyncApiName().subscribe(name => {
-            this.asyncApiService.getAsyncApis().subscribe(asyncapi => {
-                this.asyncApiData = asyncapi.get(name);
-                this.info = asyncapi.get(name).info;
-            });
+        this.asyncApiService.getAsyncApis().subscribe(asyncapi => {
+            this.asyncApiData = asyncapi;
+            this.info = asyncapi.info;
         });
     }
     download() {
@@ -1062,9 +1004,7 @@ class SchemasComponent {
     }
     ngOnInit() {
         this.location.subscribe(() => this.setSchemaSelectionFromLocation());
-        this.nameSubscription = this.asyncApiService.getCurrentAsyncApiName().subscribe(name => {
-            this.asyncApiService.getAsyncApis().subscribe(asyncapi => this.schemas = asyncapi.get(name).components.schemas);
-        });
+        this.asyncApiService.getAsyncApis().subscribe(asyncapi => this.schemas = asyncapi.components.schemas);
     }
     setSchemaSelection(schema) {
         window.location.hash = '#' + schema;
@@ -1138,9 +1078,7 @@ class ServersComponent {
         this.asyncApiService = asyncApiService;
     }
     ngOnInit() {
-        this.nameSubscription = this.asyncApiService.getCurrentAsyncApiName().subscribe(name => {
-            this.asyncApiService.getAsyncApis().subscribe(asyncapi => this.servers = asyncapi.get(name).servers);
-        });
+        this.asyncApiService.getAsyncApis().subscribe(asyncapi => this.servers = asyncapi.servers);
     }
 }
 ServersComponent.ɵfac = function ServersComponent_Factory(t) { return new (t || ServersComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_asyncapi_service__WEBPACK_IMPORTED_MODULE_1__["AsyncApiService"])); };
@@ -1190,27 +1128,15 @@ __webpack_require__.r(__webpack_exports__);
 class AsyncApiService {
     constructor(http) {
         this.http = http;
-        this.nameSubject = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
-    }
-    setCurrentAsyncApiName(currnetAsyncApiName) {
-        this.nameSubject.next(currnetAsyncApiName);
-    }
-    getCurrentAsyncApiName() {
-        return this.nameSubject.asObservable();
     }
     getAsyncApis() {
         if (this.docs) {
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(this.docs);
         }
         return this.http.get(_endpoints__WEBPACK_IMPORTED_MODULE_3__["Endpoints"].docs).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(item => {
-            this.docs = this.toAsyncApiMap(item);
+            this.docs = this.toAsyncApi(item);
             return this.docs;
         }));
-    }
-    toAsyncApiMap(response) {
-        const docs = new Map();
-        Object.entries(response).forEach(([docName, doc]) => docs.set(docName, this.toAsyncApi(doc)));
-        return docs;
     }
     toAsyncApi(item) {
         return {
@@ -1375,7 +1301,7 @@ class MockServer {
             return reqInfo.utils.createResponse$(() => {
                 return {
                     status: angular_in_memory_web_api__WEBPACK_IMPORTED_MODULE_0__["STATUS"].OK,
-                    body: mockAsyncApi
+                    body: _mock_springwolf_kafka_example_json__WEBPACK_IMPORTED_MODULE_3__
                 };
             });
         }
@@ -1400,10 +1326,10 @@ class MockServer {
 /*!***************************************************************!*\
   !*** ./src/app/shared/mock/mock.springwolf-amqp-example.json ***!
   \***************************************************************/
-/*! exports provided: Springwolf example project - AMQP, default */
+/*! exports provided: asyncapi, info, servers, channels, components, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"Springwolf example project - AMQP\":{\"asyncapi\":\"2.0.0\",\"info\":{\"title\":\"Springwolf example project - AMQP\",\"version\":\"1.0.0\"},\"servers\":{\"amqp\":{\"url\":\"amqp:5672\",\"protocol\":\"amqp\"}},\"channels\":{\"example-bindings-queue\":{\"bindings\":{\"amqp\":{\"is\":\"routingKey\",\"exchange\":{\"name\":\"name\",\"autoDelete\":false}}},\"publish\":{\"bindings\":{\"amqp\":{\"cc\":[\"\"],\"expiration\":0,\"priority\":0,\"deliveryMode\":0,\"mandatory\":false,\"timestamp\":false,\"ack\":false}},\"message\":{\"name\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\",\"title\":\"AnotherPayloadDto\",\"payload\":{\"$ref\":\"#/components/schemas/AnotherPayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/NoHeaders\"}}}},\"example-topic-queue\":{\"bindings\":{\"amqp\":{\"is\":\"routingKey\",\"exchange\":{\"name\":\"example-topic-exchange\",\"autoDelete\":false}}},\"publish\":{\"bindings\":{\"amqp\":{\"cc\":[\"example-topic-routing-key\"],\"expiration\":0,\"priority\":0,\"deliveryMode\":0,\"mandatory\":false,\"timestamp\":false,\"ack\":false}},\"message\":{\"name\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\",\"title\":\"AnotherPayloadDto\",\"payload\":{\"$ref\":\"#/components/schemas/AnotherPayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/NoHeaders\"}}}},\"another-queue\":{\"bindings\":{\"amqp\":{\"is\":\"routingKey\",\"exchange\":{\"name\":\"\",\"autoDelete\":false}}},\"publish\":{\"bindings\":{\"amqp\":{\"cc\":[\"another-queue\"],\"expiration\":0,\"priority\":0,\"deliveryMode\":0,\"mandatory\":false,\"timestamp\":false,\"ack\":false}},\"message\":{\"name\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\",\"title\":\"AnotherPayloadDto\",\"payload\":{\"$ref\":\"#/components/schemas/AnotherPayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/NoHeaders\"}}}},\"example-manual-consumer-channel\":{\"publish\":{\"bindings\":{\"amqp\":{\"expiration\":0,\"cc\":[\"example-consumer-topic-routing-key\"],\"priority\":0,\"deliveryMode\":0,\"mandatory\":false,\"timestamp\":false,\"ack\":false}},\"message\":{\"name\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\",\"title\":\"AnotherPayloadDto\",\"description\":\"example-manual-consumer-channel-description\",\"payload\":{\"$ref\":\"#/components/schemas/AnotherPayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/NoHeaders\"}}},\"bindings\":{\"amqp\":{\"is\":\"routingKey\",\"exchange\":{\"name\":\"example-consumer-topic-exchange\",\"autoDelete\":false}}}},\"example-queue\":{\"bindings\":{\"amqp\":{\"is\":\"routingKey\",\"exchange\":{\"name\":\"\",\"autoDelete\":false}}},\"publish\":{\"bindings\":{\"amqp\":{\"cc\":[\"example-queue\"],\"expiration\":0,\"priority\":0,\"deliveryMode\":0,\"mandatory\":false,\"timestamp\":false,\"ack\":false}},\"message\":{\"name\":\"io.github.stavshamir.springwolf.example.dtos.ExamplePayloadDto\",\"title\":\"ExamplePayloadDto\",\"payload\":{\"$ref\":\"#/components/schemas/ExamplePayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/NoHeaders\"}}}},\"example-producer-channel\":{\"bindings\":{\"amqp\":{\"is\":\"routingKey\",\"exchange\":{\"name\":\"example-topic-exchange\",\"autoDelete\":false}}},\"subscribe\":{\"bindings\":{\"amqp\":{\"cc\":[\"example-topic-routing-key\"],\"expiration\":0,\"priority\":0,\"deliveryMode\":0,\"mandatory\":false,\"timestamp\":false,\"ack\":false}},\"message\":{\"name\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\",\"title\":\"AnotherPayloadDto\",\"description\":\"example-producer-channel-description\",\"payload\":{\"$ref\":\"#/components/schemas/AnotherPayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/NoHeaders\"}}}}},\"components\":{\"schemas\":{\"AnotherPayloadDto\":{\"required\":[\"example\"],\"type\":\"object\",\"properties\":{\"foo\":{\"type\":\"string\",\"description\":\"Foo field\",\"example\":\"bar\",\"exampleSetFlag\":true},\"example\":{\"$ref\":\"#/components/schemas/ExamplePayloadDto\",\"exampleSetFlag\":false}},\"description\":\"Another payload model\",\"example\":{\"foo\":\"bar\",\"example\":{\"someString\":\"some string value\",\"someLong\":5,\"someEnum\":\"FOO2\"}},\"exampleSetFlag\":true},\"ExamplePayloadDto\":{\"required\":[\"someEnum\",\"someString\"],\"type\":\"object\",\"properties\":{\"someString\":{\"type\":\"string\",\"description\":\"Some string field\",\"example\":\"some string value\",\"exampleSetFlag\":true},\"someLong\":{\"type\":\"integer\",\"description\":\"Some long field\",\"format\":\"int64\",\"example\":5,\"exampleSetFlag\":true},\"someEnum\":{\"type\":\"string\",\"description\":\"Some enum field\",\"example\":\"FOO2\",\"exampleSetFlag\":true,\"enum\":[\"FOO1\",\"FOO2\",\"FOO3\"]}},\"description\":\"Example payload model\",\"example\":{\"someString\":\"some string value\",\"someLong\":5,\"someEnum\":\"FOO2\"},\"exampleSetFlag\":true},\"NoHeaders\":{\"type\":\"object\",\"exampleSetFlag\":true}}}}}");
+module.exports = JSON.parse("{\"asyncapi\":\"2.0.0\",\"info\":{\"title\":\"Springwolf example project - AMQP\",\"version\":\"1.0.0\"},\"servers\":{\"amqp\":{\"url\":\"amqp:5672\",\"protocol\":\"amqp\"}},\"channels\":{\"example-bindings-queue\":{\"bindings\":{\"amqp\":{\"is\":\"routingKey\",\"exchange\":{\"name\":\"name\",\"autoDelete\":false}}},\"publish\":{\"bindings\":{\"amqp\":{\"cc\":[\"\"],\"expiration\":0,\"priority\":0,\"deliveryMode\":0,\"mandatory\":false,\"timestamp\":false,\"ack\":false}},\"message\":{\"name\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\",\"title\":\"AnotherPayloadDto\",\"payload\":{\"$ref\":\"#/components/schemas/AnotherPayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/NoHeaders\"}}}},\"example-topic-queue\":{\"bindings\":{\"amqp\":{\"is\":\"routingKey\",\"exchange\":{\"name\":\"example-topic-exchange\",\"autoDelete\":false}}},\"publish\":{\"bindings\":{\"amqp\":{\"cc\":[\"example-topic-routing-key\"],\"expiration\":0,\"priority\":0,\"deliveryMode\":0,\"mandatory\":false,\"timestamp\":false,\"ack\":false}},\"message\":{\"name\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\",\"title\":\"AnotherPayloadDto\",\"payload\":{\"$ref\":\"#/components/schemas/AnotherPayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/NoHeaders\"}}}},\"another-queue\":{\"bindings\":{\"amqp\":{\"is\":\"routingKey\",\"exchange\":{\"name\":\"\",\"autoDelete\":false}}},\"publish\":{\"bindings\":{\"amqp\":{\"cc\":[\"another-queue\"],\"expiration\":0,\"priority\":0,\"deliveryMode\":0,\"mandatory\":false,\"timestamp\":false,\"ack\":false}},\"message\":{\"name\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\",\"title\":\"AnotherPayloadDto\",\"payload\":{\"$ref\":\"#/components/schemas/AnotherPayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/NoHeaders\"}}}},\"example-manual-consumer-channel\":{\"publish\":{\"bindings\":{\"amqp\":{\"expiration\":0,\"cc\":[\"example-consumer-topic-routing-key\"],\"priority\":0,\"deliveryMode\":0,\"mandatory\":false,\"timestamp\":false,\"ack\":false}},\"message\":{\"name\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\",\"title\":\"AnotherPayloadDto\",\"description\":\"example-manual-consumer-channel-description\",\"payload\":{\"$ref\":\"#/components/schemas/AnotherPayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/NoHeaders\"}}},\"bindings\":{\"amqp\":{\"is\":\"routingKey\",\"exchange\":{\"name\":\"example-consumer-topic-exchange\",\"autoDelete\":false}}}},\"example-queue\":{\"bindings\":{\"amqp\":{\"is\":\"routingKey\",\"exchange\":{\"name\":\"\",\"autoDelete\":false}}},\"publish\":{\"bindings\":{\"amqp\":{\"cc\":[\"example-queue\"],\"expiration\":0,\"priority\":0,\"deliveryMode\":0,\"mandatory\":false,\"timestamp\":false,\"ack\":false}},\"message\":{\"name\":\"io.github.stavshamir.springwolf.example.dtos.ExamplePayloadDto\",\"title\":\"ExamplePayloadDto\",\"payload\":{\"$ref\":\"#/components/schemas/ExamplePayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/NoHeaders\"}}}},\"example-producer-channel\":{\"bindings\":{\"amqp\":{\"is\":\"routingKey\",\"exchange\":{\"name\":\"example-topic-exchange\",\"autoDelete\":false}}},\"subscribe\":{\"bindings\":{\"amqp\":{\"cc\":[\"example-topic-routing-key\"],\"expiration\":0,\"priority\":0,\"deliveryMode\":0,\"mandatory\":false,\"timestamp\":false,\"ack\":false}},\"message\":{\"name\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\",\"title\":\"AnotherPayloadDto\",\"description\":\"example-producer-channel-description\",\"payload\":{\"$ref\":\"#/components/schemas/AnotherPayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/NoHeaders\"}}}}},\"components\":{\"schemas\":{\"AnotherPayloadDto\":{\"required\":[\"example\"],\"type\":\"object\",\"properties\":{\"foo\":{\"type\":\"string\",\"description\":\"Foo field\",\"example\":\"bar\",\"exampleSetFlag\":true},\"example\":{\"$ref\":\"#/components/schemas/ExamplePayloadDto\",\"exampleSetFlag\":false}},\"description\":\"Another payload model\",\"example\":{\"foo\":\"bar\",\"example\":{\"someString\":\"some string value\",\"someLong\":5,\"someEnum\":\"FOO2\"}},\"exampleSetFlag\":true},\"ExamplePayloadDto\":{\"required\":[\"someEnum\",\"someString\"],\"type\":\"object\",\"properties\":{\"someString\":{\"type\":\"string\",\"description\":\"Some string field\",\"example\":\"some string value\",\"exampleSetFlag\":true},\"someLong\":{\"type\":\"integer\",\"description\":\"Some long field\",\"format\":\"int64\",\"example\":5,\"exampleSetFlag\":true},\"someEnum\":{\"type\":\"string\",\"description\":\"Some enum field\",\"example\":\"FOO2\",\"exampleSetFlag\":true,\"enum\":[\"FOO1\",\"FOO2\",\"FOO3\"]}},\"description\":\"Example payload model\",\"example\":{\"someString\":\"some string value\",\"someLong\":5,\"someEnum\":\"FOO2\"},\"exampleSetFlag\":true},\"NoHeaders\":{\"type\":\"object\",\"exampleSetFlag\":true}}}}");
 
 /***/ }),
 
@@ -1411,10 +1337,10 @@ module.exports = JSON.parse("{\"Springwolf example project - AMQP\":{\"asyncapi\
 /*!******************************************************!*\
   !*** ./src/app/shared/mock/mock.springwolf-app.json ***!
   \******************************************************/
-/*! exports provided: Springwolf UI Demo, default */
+/*! exports provided: asyncapi, info, servers, channels, components, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"Springwolf UI Demo\":{\"asyncapi\":\"2.0.0\",\"info\":{\"title\":\"Springwolf UI Demo\",\"description\":\"This is a demo project for springwolf that shows how the UI looks like and functions.\",\"version\":\"1.0.0\"},\"servers\":{\"kafka\":{\"url\":\"kafka:29092\",\"protocol\":\"kafka\"}},\"channels\":{\"example-consumer-topic\":{\"publish\":{\"bindings\":{\"kafka\":{\"groupId\":{\"type\":\"string\",\"enum\":[\"example-group-id\"]}}},\"message\":{\"name\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\",\"title\":\"AnotherPayloadDto\",\"description\":\"Custom, optional description for this message\",\"payload\":{\"$ref\":\"#/components/schemas/AnotherPayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/NoHeaders\"}}}},\"example-producer-topic\":{\"publish\":{\"bindings\":{\"kafka\":{\"groupId\":{\"type\":\"string\",\"enum\":[\"example-group-id\"]}}},\"message\":{\"name\":\"io.github.stavshamir.springwolf.example.dtos.ExamplePayloadDto\",\"title\":\"ExamplePayloadDto\",\"payload\":{\"$ref\":\"#/components/schemas/ExamplePayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/NoHeaders\"}}},\"subscribe\":{\"bindings\":{\"kafka\":{}},\"message\":{\"name\":\"io.github.stavshamir.springwolf.example.dtos.ExamplePayloadDto\",\"title\":\"ExamplePayloadDto\",\"payload\":{\"$ref\":\"#/components/schemas/ExamplePayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/NoHeaders\"}}}},\"multi-payload-topic\":{\"publish\":{\"bindings\":{\"kafka\":{}},\"message\":{\"oneOf\":[{\"name\":\"io.github.stavshamir.springwolf.example.dtos.ExamplePayloadDto\",\"title\":\"ExamplePayloadDto\",\"description\":\"Custom, optional description for this message\",\"payload\":{\"$ref\":\"#/components/schemas/ExamplePayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/SpringDefaultHeaders\"}},{\"name\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\",\"title\":\"AnotherPayloadDto\",\"payload\":{\"$ref\":\"#/components/schemas/AnotherPayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/NoHeaders\"}}]}}}},\"components\":{\"schemas\":{\"ExamplePayloadDto\":{\"description\":\"Example payload model\",\"type\":\"object\",\"properties\":{\"someString\":{\"description\":\"some string field\",\"type\":\"string\",\"example\":\"string\"},\"someLong\":{\"description\":\"some long field\",\"type\":\"integer\",\"format\":\"int64\",\"example\":0},\"someEnum\":{\"description\":\"some enum field\",\"type\":\"string\",\"enum\":[\"FOO1\",\"FOO2\",\"FOO3\"],\"example\":\"FOO1\"}},\"example\":{\"someString\":\"string\",\"someLong\":0,\"someEnum\":\"FOO1\"},\"required\":[\"someString\",\"someEnum\"]},\"AnotherPayloadDto\":{\"description\":\"Another payload model\",\"type\":\"object\",\"properties\":{\"foo\":{\"description\":\"foo field\",\"type\":\"string\"},\"example\":{\"description\":\"example field\",\"$ref\":\"#/components/schemas/ExamplePayloadDto\"}},\"example\":{\"foo\":\"string\",\"example\":{\"someString\":\"string\",\"someLong\":0,\"someEnum\":\"FOO1\"}}},\"NoHeaders\":{\"type\":\"object\",\"exampleSetFlag\":true},\"SpringDefaultHeaders\":{\"type\":\"object\",\"properties\":{\"__TypeId__\":{\"type\":\"string\",\"example\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\",\"exampleSetFlag\":true,\"enum\":[\"io.github.stavshamir.springwolf.example.dtos.ExamplePayloadDto\",\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\"]}},\"example\":{\"__TypeId__\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\"},\"exampleSetFlag\":true}}}}}");
+module.exports = JSON.parse("{\"asyncapi\":\"2.0.0\",\"info\":{\"title\":\"Springwolf UI Demo\",\"description\":\"This is a demo project for springwolf that shows how the UI looks like and functions.\",\"version\":\"1.0.0\"},\"servers\":{\"kafka\":{\"url\":\"kafka:29092\",\"protocol\":\"kafka\"}},\"channels\":{\"example-consumer-topic\":{\"publish\":{\"bindings\":{\"kafka\":{\"groupId\":{\"type\":\"string\",\"enum\":[\"example-group-id\"]}}},\"message\":{\"name\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\",\"title\":\"AnotherPayloadDto\",\"description\":\"Custom, optional description for this message\",\"payload\":{\"$ref\":\"#/components/schemas/AnotherPayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/NoHeaders\"}}}},\"example-producer-topic\":{\"publish\":{\"bindings\":{\"kafka\":{\"groupId\":{\"type\":\"string\",\"enum\":[\"example-group-id\"]}}},\"message\":{\"name\":\"io.github.stavshamir.springwolf.example.dtos.ExamplePayloadDto\",\"title\":\"ExamplePayloadDto\",\"payload\":{\"$ref\":\"#/components/schemas/ExamplePayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/NoHeaders\"}}},\"subscribe\":{\"bindings\":{\"kafka\":{}},\"message\":{\"name\":\"io.github.stavshamir.springwolf.example.dtos.ExamplePayloadDto\",\"title\":\"ExamplePayloadDto\",\"payload\":{\"$ref\":\"#/components/schemas/ExamplePayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/NoHeaders\"}}}},\"multi-payload-topic\":{\"publish\":{\"bindings\":{\"kafka\":{}},\"message\":{\"oneOf\":[{\"name\":\"io.github.stavshamir.springwolf.example.dtos.ExamplePayloadDto\",\"title\":\"ExamplePayloadDto\",\"description\":\"Custom, optional description for this message\",\"payload\":{\"$ref\":\"#/components/schemas/ExamplePayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/SpringDefaultHeaders\"}},{\"name\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\",\"title\":\"AnotherPayloadDto\",\"payload\":{\"$ref\":\"#/components/schemas/AnotherPayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/NoHeaders\"}}]}}}},\"components\":{\"schemas\":{\"ExamplePayloadDto\":{\"description\":\"Example payload model\",\"type\":\"object\",\"properties\":{\"someString\":{\"description\":\"some string field\",\"type\":\"string\",\"example\":\"string\"},\"someLong\":{\"description\":\"some long field\",\"type\":\"integer\",\"format\":\"int64\",\"example\":0},\"someEnum\":{\"description\":\"some enum field\",\"type\":\"string\",\"enum\":[\"FOO1\",\"FOO2\",\"FOO3\"],\"example\":\"FOO1\"}},\"example\":{\"someString\":\"string\",\"someLong\":0,\"someEnum\":\"FOO1\"},\"required\":[\"someString\",\"someEnum\"]},\"AnotherPayloadDto\":{\"description\":\"Another payload model\",\"type\":\"object\",\"properties\":{\"foo\":{\"description\":\"foo field\",\"type\":\"string\"},\"example\":{\"description\":\"example field\",\"$ref\":\"#/components/schemas/ExamplePayloadDto\"}},\"example\":{\"foo\":\"string\",\"example\":{\"someString\":\"string\",\"someLong\":0,\"someEnum\":\"FOO1\"}}},\"NoHeaders\":{\"type\":\"object\",\"exampleSetFlag\":true},\"SpringDefaultHeaders\":{\"type\":\"object\",\"properties\":{\"__TypeId__\":{\"type\":\"string\",\"example\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\",\"exampleSetFlag\":true,\"enum\":[\"io.github.stavshamir.springwolf.example.dtos.ExamplePayloadDto\",\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\"]}},\"example\":{\"__TypeId__\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\"},\"exampleSetFlag\":true}}}}");
 
 /***/ }),
 
@@ -1422,10 +1348,10 @@ module.exports = JSON.parse("{\"Springwolf UI Demo\":{\"asyncapi\":\"2.0.0\",\"i
 /*!****************************************************************!*\
   !*** ./src/app/shared/mock/mock.springwolf-kafka-example.json ***!
   \****************************************************************/
-/*! exports provided: Springwolf example project - Kafka, default */
+/*! exports provided: asyncapi, info, servers, channels, components, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"Springwolf example project - Kafka\":{\"asyncapi\":\"2.0.0\",\"info\":{\"title\":\"Springwolf example project - Kafka\",\"version\":\"1.0.0\"},\"servers\":{\"kafka\":{\"url\":\"kafka:29092\",\"protocol\":\"kafka\"}},\"channels\":{\"another-topic\":{\"publish\":{\"bindings\":{\"kafka\":{\"groupId\":{\"type\":\"string\",\"enum\":[\"example-group-id\"]}}},\"message\":{\"name\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\",\"title\":\"AnotherPayloadDto\",\"payload\":{\"$ref\":\"#/components/schemas/AnotherPayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/HeadersUnknown\"}}},\"bindings\":{\"kafka\":{}}},\"example-topic\":{\"publish\":{\"bindings\":{\"kafka\":{}},\"message\":{\"name\":\"io.github.stavshamir.springwolf.example.dtos.ExamplePayloadDto\",\"title\":\"ExamplePayloadDto\",\"payload\":{\"$ref\":\"#/components/schemas/ExamplePayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/HeadersUnknown\"}}},\"bindings\":{\"kafka\":{}}},\"example-producer-topic\":{\"subscribe\":{\"bindings\":{\"kafka\":{}},\"message\":{\"oneOf\":[{\"name\":\"io.github.stavshamir.springwolf.example.dtos.ExamplePayloadDto\",\"title\":\"ExamplePayloadDto\",\"payload\":{\"$ref\":\"#/components/schemas/ExamplePayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/SpringDefaultHeaders\"}},{\"name\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\",\"title\":\"AnotherPayloadDto\",\"description\":\"Custom, optional description for this produced to topic\",\"payload\":{\"$ref\":\"#/components/schemas/AnotherPayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/CloudEventHeadersForAnotherPayloadDtoEndpoint\"}}]}},\"bindings\":{\"kafka\":{}}},\"example-consumer-topic\":{\"publish\":{\"bindings\":{\"kafka\":{}},\"message\":{\"name\":\"io.github.stavshamir.springwolf.example.dtos.ExamplePayloadDto\",\"title\":\"ExamplePayloadDto\",\"description\":\"Custom, optional description for this consumed topic\",\"payload\":{\"$ref\":\"#/components/schemas/ExamplePayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/HeadersUnknown\"}}},\"bindings\":{\"kafka\":{}}},\"multi-payload-topic\":{\"publish\":{\"bindings\":{\"kafka\":{}},\"message\":{\"oneOf\":[{\"name\":\"io.github.stavshamir.springwolf.example.dtos.ExamplePayloadDto\",\"title\":\"ExamplePayloadDto\",\"payload\":{\"$ref\":\"#/components/schemas/ExamplePayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/HeadersUnknown\"}},{\"name\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\",\"title\":\"AnotherPayloadDto\",\"payload\":{\"$ref\":\"#/components/schemas/AnotherPayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/HeadersUnknown\"}},{\"name\":\"javax.money.MonetaryAmount\",\"title\":\"MonetaryAmount\",\"payload\":{\"$ref\":\"#/components/schemas/MonetaryAmount\"},\"headers\":{\"$ref\":\"#/components/schemas/HeadersUnknown\"}}]}},\"bindings\":{\"kafka\":{}}}},\"components\":{\"schemas\":{\"MonetaryAmount\":{\"type\":\"object\",\"properties\":{\"amount\":{\"type\":\"number\",\"example\":99.99,\"exampleSetFlag\":true},\"currency\":{\"type\":\"string\",\"example\":\"USD\",\"exampleSetFlag\":true}},\"example\":{\"amount\":99.99,\"currency\":\"USD\"},\"exampleSetFlag\":true},\"ExamplePayloadDto\":{\"type\":\"object\",\"properties\":{\"someString\":{\"type\":\"string\",\"exampleSetFlag\":false},\"someLong\":{\"type\":\"integer\",\"format\":\"int64\",\"exampleSetFlag\":false},\"someEnum\":{\"type\":\"string\",\"exampleSetFlag\":false,\"enum\":[\"FOO1\",\"FOO2\",\"FOO3\"]}},\"example\":{\"someString\":\"string\",\"someLong\":0,\"someEnum\":\"FOO1\"},\"exampleSetFlag\":true},\"CloudEventHeadersForAnotherPayloadDtoEndpoint\":{\"type\":\"object\",\"properties\":{\"ce_specversion\":{\"type\":\"string\",\"description\":\"Spec Version Header\",\"example\":\"1.0\",\"exampleSetFlag\":true},\"ce_time\":{\"type\":\"string\",\"description\":\"Time Header\",\"example\":\"2015-07-20T15:49:04-07:00\",\"exampleSetFlag\":true},\"content-type\":{\"type\":\"string\",\"description\":\"Content-Type Header\",\"example\":\"application/json\",\"exampleSetFlag\":true},\"ce_id\":{\"type\":\"string\",\"description\":\"Id Header\",\"example\":\"1234-1234-1234\",\"exampleSetFlag\":true},\"ce_type\":{\"type\":\"string\",\"description\":\"Payload Type Header\",\"example\":\"io.github.stavshamir.springwolf.CloudEventHeadersForAnotherPayloadDtoEndpoint\",\"exampleSetFlag\":true},\"ce_source\":{\"type\":\"string\",\"description\":\"Source Header\",\"example\":\"springwolf-kafka-example/anotherPayloadDtoEndpoint\",\"exampleSetFlag\":true}},\"example\":{\"ce_specversion\":\"1.0\",\"ce_time\":\"2015-07-20T15:49:04-07:00\",\"content-type\":\"application/json\",\"ce_id\":\"1234-1234-1234\",\"ce_type\":\"io.github.stavshamir.springwolf.CloudEventHeadersForAnotherPayloadDtoEndpoint\",\"ce_source\":\"springwolf-kafka-example/anotherPayloadDtoEndpoint\"},\"exampleSetFlag\":true},\"HeadersUnknown\":{\"type\":\"object\",\"properties\":{},\"example\":{},\"exampleSetFlag\":true},\"AnotherPayloadDto\":{\"type\":\"object\",\"properties\":{\"foo\":{\"type\":\"string\",\"exampleSetFlag\":false},\"example\":{\"$ref\":\"#/components/schemas/ExamplePayloadDto\",\"exampleSetFlag\":false}},\"example\":{\"foo\":\"string\",\"example\":{\"someString\":\"string\",\"someLong\":0,\"someEnum\":\"FOO1\"}},\"exampleSetFlag\":true},\"SpringDefaultHeaders\":{\"type\":\"object\",\"properties\":{\"__TypeId__\":{\"type\":\"string\",\"description\":\"Spring Type Id Header\",\"example\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\",\"exampleSetFlag\":true,\"enum\":[\"io.github.stavshamir.springwolf.example.dtos.ExamplePayloadDto\",\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\"]}},\"example\":{\"__TypeId__\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\"},\"exampleSetFlag\":true}}}}}");
+module.exports = JSON.parse("{\"asyncapi\":\"2.0.0\",\"info\":{\"title\":\"Springwolf example project - Kafka\",\"description\":\"This is a demo project for springwolf that shows how the UI looks like and functions.\",\"version\":\"1.0.0\"},\"servers\":{\"kafka\":{\"url\":\"kafka:29092\",\"protocol\":\"kafka\"}},\"channels\":{\"another-topic\":{\"publish\":{\"bindings\":{\"kafka\":{\"groupId\":{\"type\":\"string\",\"enum\":[\"example-group-id\"]}}},\"message\":{\"name\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\",\"title\":\"AnotherPayloadDto\",\"payload\":{\"$ref\":\"#/components/schemas/AnotherPayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/HeadersUnknown\"}}},\"bindings\":{\"kafka\":{}}},\"example-topic\":{\"publish\":{\"bindings\":{\"kafka\":{}},\"message\":{\"name\":\"io.github.stavshamir.springwolf.example.dtos.ExamplePayloadDto\",\"title\":\"ExamplePayloadDto\",\"payload\":{\"$ref\":\"#/components/schemas/ExamplePayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/HeadersUnknown\"}}},\"bindings\":{\"kafka\":{}}},\"example-producer-topic\":{\"subscribe\":{\"bindings\":{\"kafka\":{}},\"message\":{\"oneOf\":[{\"name\":\"io.github.stavshamir.springwolf.example.dtos.ExamplePayloadDto\",\"title\":\"ExamplePayloadDto\",\"payload\":{\"$ref\":\"#/components/schemas/ExamplePayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/SpringDefaultHeaders\"}},{\"name\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\",\"title\":\"AnotherPayloadDto\",\"description\":\"Custom, optional description for this produced to topic\",\"payload\":{\"$ref\":\"#/components/schemas/AnotherPayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/CloudEventHeadersForAnotherPayloadDtoEndpoint\"}}]}},\"bindings\":{\"kafka\":{}}},\"example-consumer-topic\":{\"publish\":{\"bindings\":{\"kafka\":{}},\"message\":{\"name\":\"io.github.stavshamir.springwolf.example.dtos.ExamplePayloadDto\",\"title\":\"ExamplePayloadDto\",\"description\":\"Custom, optional description for this consumed topic\",\"payload\":{\"$ref\":\"#/components/schemas/ExamplePayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/HeadersUnknown\"}}},\"bindings\":{\"kafka\":{}}},\"multi-payload-topic\":{\"publish\":{\"bindings\":{\"kafka\":{}},\"message\":{\"oneOf\":[{\"name\":\"io.github.stavshamir.springwolf.example.dtos.ExamplePayloadDto\",\"title\":\"ExamplePayloadDto\",\"payload\":{\"$ref\":\"#/components/schemas/ExamplePayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/HeadersUnknown\"}},{\"name\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\",\"title\":\"AnotherPayloadDto\",\"payload\":{\"$ref\":\"#/components/schemas/AnotherPayloadDto\"},\"headers\":{\"$ref\":\"#/components/schemas/HeadersUnknown\"}},{\"name\":\"javax.money.MonetaryAmount\",\"title\":\"MonetaryAmount\",\"payload\":{\"$ref\":\"#/components/schemas/MonetaryAmount\"},\"headers\":{\"$ref\":\"#/components/schemas/HeadersUnknown\"}}]}},\"bindings\":{\"kafka\":{}}}},\"components\":{\"schemas\":{\"MonetaryAmount\":{\"type\":\"object\",\"properties\":{\"amount\":{\"type\":\"number\",\"example\":99.99,\"exampleSetFlag\":true},\"currency\":{\"type\":\"string\",\"example\":\"USD\",\"exampleSetFlag\":true}},\"example\":{\"amount\":99.99,\"currency\":\"USD\"},\"exampleSetFlag\":true},\"ExamplePayloadDto\":{\"type\":\"object\",\"properties\":{\"someString\":{\"type\":\"string\",\"exampleSetFlag\":false},\"someLong\":{\"type\":\"integer\",\"format\":\"int64\",\"exampleSetFlag\":false},\"someEnum\":{\"type\":\"string\",\"exampleSetFlag\":false,\"enum\":[\"FOO1\",\"FOO2\",\"FOO3\"]}},\"example\":{\"someString\":\"string\",\"someLong\":0,\"someEnum\":\"FOO1\"},\"exampleSetFlag\":true},\"CloudEventHeadersForAnotherPayloadDtoEndpoint\":{\"type\":\"object\",\"properties\":{\"ce_specversion\":{\"type\":\"string\",\"description\":\"Spec Version Header\",\"example\":\"1.0\",\"exampleSetFlag\":true},\"ce_time\":{\"type\":\"string\",\"description\":\"Time Header\",\"example\":\"2015-07-20T15:49:04-07:00\",\"exampleSetFlag\":true},\"content-type\":{\"type\":\"string\",\"description\":\"Content-Type Header\",\"example\":\"application/json\",\"exampleSetFlag\":true},\"ce_id\":{\"type\":\"string\",\"description\":\"Id Header\",\"example\":\"1234-1234-1234\",\"exampleSetFlag\":true},\"ce_type\":{\"type\":\"string\",\"description\":\"Payload Type Header\",\"example\":\"io.github.stavshamir.springwolf.CloudEventHeadersForAnotherPayloadDtoEndpoint\",\"exampleSetFlag\":true},\"ce_source\":{\"type\":\"string\",\"description\":\"Source Header\",\"example\":\"springwolf-kafka-example/anotherPayloadDtoEndpoint\",\"exampleSetFlag\":true}},\"example\":{\"ce_specversion\":\"1.0\",\"ce_time\":\"2015-07-20T15:49:04-07:00\",\"content-type\":\"application/json\",\"ce_id\":\"1234-1234-1234\",\"ce_type\":\"io.github.stavshamir.springwolf.CloudEventHeadersForAnotherPayloadDtoEndpoint\",\"ce_source\":\"springwolf-kafka-example/anotherPayloadDtoEndpoint\"},\"exampleSetFlag\":true},\"HeadersUnknown\":{\"type\":\"object\",\"properties\":{},\"example\":{},\"exampleSetFlag\":true},\"AnotherPayloadDto\":{\"type\":\"object\",\"properties\":{\"foo\":{\"type\":\"string\",\"exampleSetFlag\":false},\"example\":{\"$ref\":\"#/components/schemas/ExamplePayloadDto\",\"exampleSetFlag\":false}},\"example\":{\"foo\":\"string\",\"example\":{\"someString\":\"string\",\"someLong\":0,\"someEnum\":\"FOO1\"}},\"exampleSetFlag\":true},\"SpringDefaultHeaders\":{\"type\":\"object\",\"properties\":{\"__TypeId__\":{\"type\":\"string\",\"description\":\"Spring Type Id Header\",\"example\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\",\"exampleSetFlag\":true,\"enum\":[\"io.github.stavshamir.springwolf.example.dtos.ExamplePayloadDto\",\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\"]}},\"example\":{\"__TypeId__\":\"io.github.stavshamir.springwolf.example.dtos.AnotherPayloadDto\"},\"exampleSetFlag\":true}}}}");
 
 /***/ }),
 
