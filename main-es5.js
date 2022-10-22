@@ -583,12 +583,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }
       }, {
         key: "publish",
-        value: function publish(example) {
+        value: function publish(example, headers) {
           var _this2 = this;
 
           try {
-            var json = JSON.parse(example);
-            this.publisherService.publish(this.protocolName, this.channelName, json).subscribe(function (_) {
+            var payloadJson = JSON.parse(example);
+            var headersJson = JSON.parse(headers);
+            this.publisherService.publish(this.protocolName, this.channelName, payloadJson, headersJson).subscribe(function (_) {
               return _this2.handlePublishSuccess();
             }, function (err) {
               return _this2.handlePublishError(err);
@@ -676,7 +677,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
             var _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](7);
 
-            return ctx.publish(_r1.value);
+            var _r4 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](31);
+
+            return ctx.publish(_r1.value, _r4.value);
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](10, " Publish ");
@@ -2967,12 +2970,16 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
       _createClass(PublisherService, [{
         key: "publish",
-        value: function publish(protocol, topic, payload) {
+        value: function publish(protocol, topic, payload, headers) {
           var url = _endpoints__WEBPACK_IMPORTED_MODULE_2__["Endpoints"].getPublishEndpoint(protocol);
 
           var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]().set('topic', topic);
+          var body = {
+            "payload": payload,
+            "headers": headers
+          };
           console.log("Publishing to ".concat(url));
-          return this.http.post(url, payload, {
+          return this.http.post(url, body, {
             params: params
           });
         }

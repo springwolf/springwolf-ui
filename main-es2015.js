@@ -309,10 +309,11 @@ class ChannelMainComponent {
                 break;
         }
     }
-    publish(example) {
+    publish(example, headers) {
         try {
-            const json = JSON.parse(example);
-            this.publisherService.publish(this.protocolName, this.channelName, json).subscribe(_ => this.handlePublishSuccess(), err => this.handlePublishError(err));
+            const payloadJson = JSON.parse(example);
+            const headersJson = JSON.parse(headers);
+            this.publisherService.publish(this.protocolName, this.channelName, payloadJson, headersJson).subscribe(_ => this.handlePublishSuccess(), err => this.handlePublishError(err));
         }
         catch (error) {
             this.snackBar.open('Example payload is not valid', 'ERROR', {
@@ -349,7 +350,7 @@ ChannelMainComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdef
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "div", 6);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "button", 7);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function ChannelMainComponent_Template_button_click_9_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r5); const _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](7); return ctx.publish(_r1.value); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function ChannelMainComponent_Template_button_click_9_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r5); const _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](7); const _r4 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](31); return ctx.publish(_r1.value, _r4.value); });
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](10, " Publish ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](11, "button", 7);
@@ -1505,11 +1506,12 @@ class PublisherService {
     constructor(http) {
         this.http = http;
     }
-    publish(protocol, topic, payload) {
+    publish(protocol, topic, payload, headers) {
         const url = _endpoints__WEBPACK_IMPORTED_MODULE_2__["Endpoints"].getPublishEndpoint(protocol);
         const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]().set('topic', topic);
+        const body = { "payload": payload, "headers": headers };
         console.log(`Publishing to ${url}`);
-        return this.http.post(url, payload, { params });
+        return this.http.post(url, body, { params });
     }
 }
 PublisherService.ɵfac = function PublisherService_Factory(t) { return new (t || PublisherService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"])); };
