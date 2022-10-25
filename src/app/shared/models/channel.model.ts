@@ -5,9 +5,10 @@ export interface Channel {
 }
 
 export interface Operation {
-    type: string;
     message: Message;
     bindings?: { [type: string]: any };
+    protocol: string;
+    operation: string;
 }
 
 export interface Message {

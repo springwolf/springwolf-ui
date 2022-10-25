@@ -28,13 +28,13 @@ export class ChannelMainComponent implements OnInit {
   headersExample: Example;
   headersTextAreaLineCount: number;
   protocolName: string;
-  nameSubscription: Subscription;
 
   constructor(
     private asyncApiService: AsyncApiService,
     private publisherService: PublisherService,
     private snackBar: MatSnackBar
-  ) { }
+  ) {}
+
 
   ngOnInit(): void {
     this.asyncApiService.getAsyncApis().subscribe(
@@ -97,6 +97,10 @@ export class ChannelMainComponent implements OnInit {
     return this.snackBar.open(msg, 'ERROR', {
       duration: 4000
     });
+  }
+
+  public getSchemaUrl(fragment: string): string {
+    return window.location.pathname + window.location.search + "#" + fragment;
   }
 
 }

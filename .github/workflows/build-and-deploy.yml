@@ -1,8 +1,10 @@
-name: Build
+name: Build and Deploy
 
 on:
-  - push
-  - workflow_dispatch
+  push:
+    branches:
+      - master
+  workflow_dispatch: {}
 
 permissions:
   # Allow to publish github pages
