@@ -5,7 +5,6 @@ import { Schema } from 'src/app/shared/models/schema.model';
 import { PublisherService } from 'src/app/shared/publisher.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Operation } from 'src/app/shared/models/channel.model';
-import { Subscription } from 'rxjs';
 import { STATUS } from 'angular-in-memory-web-api';
 
 @Component({
@@ -37,19 +36,19 @@ export class ChannelMainComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.asyncApiService.getAsyncApis().subscribe(
+    this.asyncApiService.getAsyncApi().subscribe(
       asyncapi => {
-        let schemas: Map<string, Schema> = asyncapi.get(this.docName).components.schemas;
-        this.schemaName = this.operation.message.payload.$ref.slice(this.operation.message.payload.$ref.lastIndexOf('/') + 1)
-        this.schema = schemas[this.schemaName];
+        let schemas: Map<string, Schema> = asyncapi.components.schemas;
+        this.schemaName = this.operation.message.payload.name.slice(this.operation.message.payload.name.lastIndexOf('/') + 1)
+        this.schema = schemas.get(this.schemaName);
 
-        this.defaultExample = new Example(this.schema.example);
-        this.exampleTextAreaLineCount = this.defaultExample.lineCount;
+        this.defaultExample = this.schema.example;
+        this.exampleTextAreaLineCount = this.defaultExample?.lineCount || 0;
 
-        this.headersSchemaName = this.operation.message.headers.$ref.slice(this.operation.message.headers.$ref.lastIndexOf('/') + 1)
-        this.headers = schemas[this.headersSchemaName];
-        this.headersExample = new Example(this.headers.example);
-        this.headersTextAreaLineCount = this.headersExample.lineCount;
+        this.headersSchemaName = this.operation.message.headers.name.slice(this.operation.message.headers.name.lastIndexOf('/') + 1)
+        this.headers = schemas.get(this.headersSchemaName);
+        this.headersExample = this.headers.example;
+        this.headersTextAreaLineCount = this.headersExample?.lineCount || 0;
       }
     );
 
@@ -67,11 +66,12 @@ export class ChannelMainComponent implements OnInit {
     }
   }
 
-  publish(example: string): void {
+  publish(example: string, headers: string): void {
     try {
-      const json = JSON.parse(example);
+      const payloadJson = JSON.parse(example);
+      const headersJson = JSON.parse(headers)
 
-      this.publisherService.publish(this.protocolName, this.channelName, json).subscribe(
+      this.publisherService.publish(this.protocolName, this.channelName, payloadJson, headersJson).subscribe(
         _ => this.handlePublishSuccess(),
         err => this.handlePublishError(err)
       );
@@ -97,10 +97,6 @@ export class ChannelMainComponent implements OnInit {
     return this.snackBar.open(msg, 'ERROR', {
       duration: 4000
     });
-  }
-
-  public getSchemaUrl(fragment: string): string {
-    return window.location.pathname + window.location.search + "#" + fragment;
   }
 
 }

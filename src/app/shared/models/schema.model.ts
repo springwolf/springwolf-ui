@@ -1,9 +1,14 @@
 import { Example } from './example.model';
 
 export interface Schema {
-    description?: String;
-    type: String;
+    name?: string;
+    description?: string;
+    anchorIdentifier?: string;
+    anchorUrl?: string;
+    type?: string;
+    format?: string;
+    enum?: string[];
     properties?: Map<string, Schema>;
-    example: Example;
+    example?: Example;
     required?: string[];
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { Subscription, SubscriptionLike } from 'rxjs';
 import { AsyncApiService } from '../shared/asyncapi.service';
 import { Schema } from '../shared/models/schema.model';
 
@@ -14,7 +13,6 @@ export class SchemasComponent implements OnInit {
 
   schemas: Map<string, Schema>;
   selectedSchema: string;
-  nameSubscription: Subscription;
 
   constructor(private asyncApiService: AsyncApiService, private location: Location) {
     this.setSchemaSelectionFromLocation()
@@ -22,18 +20,15 @@ export class SchemasComponent implements OnInit {
 
   ngOnInit(): void {
     this.location.subscribe(() : void => this.setSchemaSelectionFromLocation())
-
-    this.nameSubscription = this.asyncApiService.getCurrentAsyncApiName().subscribe(name => {
-      this.asyncApiService.getAsyncApis().subscribe(asyncapi => this.schemas = asyncapi.get(name).components.schemas);
-    });
+      this.asyncApiService.getAsyncApi().subscribe(asyncapi => this.schemas = asyncapi.components.schemas);
   }
 
-  setSchemaSelection(schema: string): void {
-    window.location.hash = '#' + schema;
-    var element = window.document.getElementById(schema);
-    element.scrollIntoView({behavior: 'smooth', block: 'start'});
+  setSchemaSelection(schema: Schema): void {
+    window.location.hash = schema.anchorIdentifier
+     var element = window.document.getElementById(schema.anchorIdentifier);
+     element.scrollIntoView({behavior: 'smooth', block: 'start'});
   }
   setSchemaSelectionFromLocation(): void {
-    this.selectedSchema = window.location.hash.substr(1);
+    this.selectedSchema = window.location.hash;
   }
 }
