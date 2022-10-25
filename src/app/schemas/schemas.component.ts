@@ -25,8 +25,9 @@ export class SchemasComponent implements OnInit {
 
   setSchemaSelection(schema: Schema): void {
     window.location.hash = schema.anchorIdentifier
-     var element = window.document.getElementById(schema.anchorIdentifier);
-     element.scrollIntoView({behavior: 'smooth', block: 'start'});
+     let element = window.document.getElementById(schema.anchorIdentifier);
+     let element2 = element.getElementsByClassName('mat-expansion-panel-content')[0];
+     element2.scrollIntoView({behavior: 'smooth', block: 'start'});
   }
   setSchemaSelectionFromLocation(): void {
     this.selectedSchema = window.location.hash;

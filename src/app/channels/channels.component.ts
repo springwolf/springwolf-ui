@@ -47,7 +47,8 @@ export class ChannelsComponent implements OnInit {
   setChannelSelection(channel: Channel): void {
     window.location.hash = channel.anchorIdentifier;
     var element = window.document.getElementById(channel.anchorIdentifier);
-    element.scrollIntoView({behavior: 'smooth', block: 'start'});
+    let element2 = element.getElementsByClassName('mat-expansion-panel-content')[0];
+    element2.scrollIntoView({behavior: 'smooth', block: 'start'});
   }
   setChannelSelectionFromLocation(): void {
     const anchor = window.location.hash;
