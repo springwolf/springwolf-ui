@@ -29,7 +29,9 @@ export class SchemasComponent implements OnInit {
   }
 
   setSchemaSelection(schema: string): void {
-    window.location.hash = '#' + schema
+    window.location.hash = '#' + schema;
+    var element = window.document.getElementById(schema);
+    element.scrollIntoView({behavior: 'smooth', block: 'start'});
   }
   setSchemaSelectionFromLocation(): void {
     this.selectedSchema = window.location.hash.substr(1);

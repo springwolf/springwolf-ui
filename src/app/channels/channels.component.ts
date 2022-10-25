@@ -49,6 +49,8 @@ export class ChannelsComponent implements OnInit {
 
   setChannelSelection(channel: Channel): void {
     window.location.hash = '#' + this.getChannelIdentifier(channel)
+    var element = window.document.getElementById(this.getChannelIdentifier(channel));
+    element.scrollIntoView({behavior: 'smooth', block: 'start'});
   }
   setChannelSelectionFromLocation(): void {
     const anchor = window.location.hash.substr(1);
