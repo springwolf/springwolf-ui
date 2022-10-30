@@ -20,7 +20,7 @@ import { MockServer } from './shared/mock/mock-server';
 import { PublisherService } from './shared/publisher.service';
 import { FormsModule } from '@angular/forms';
 import { JsonComponent } from './shared/components/json/json.component';
-import {AsyncApiMapperService} from "./shared/asyncapi-mapper.service";
+import { AsyncApiMapperService } from './shared/asyncapi-mapper.service';
 
 @NgModule({
   declarations: [
@@ -42,7 +42,9 @@ import {AsyncApiMapperService} from "./shared/asyncapi-mapper.service";
     HighlightModule,
     HttpClientModule,
     FormsModule,
-    environment.production ? [] : HttpClientInMemoryWebApiModule.forRoot(MockServer, { delay: 100 })
+    environment.production
+      ? []
+      : HttpClientInMemoryWebApiModule.forRoot(MockServer, { delay: 100 }),
   ],
   providers: [
     AsyncApiService,
@@ -52,11 +54,13 @@ import {AsyncApiMapperService} from "./shared/asyncapi-mapper.service";
       provide: HIGHLIGHT_OPTIONS,
       useValue: {
         languages: function () {
-          return { typescript: () => import('highlight.js/lib/languages/typescript') };
-        }
-      }
-    }
+          return {
+            typescript: () => import('highlight.js/lib/languages/typescript'),
+          };
+        },
+      },
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

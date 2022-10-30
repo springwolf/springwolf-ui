@@ -6,17 +6,16 @@ import { AsyncApiService } from '../shared/asyncapi.service';
 @Component({
   selector: 'app-info',
   templateUrl: './info.component.html',
-  styleUrls: ['./info.component.css']
+  styleUrls: ['./info.component.css'],
 })
 export class InfoComponent implements OnInit {
-
   asyncApiData: AsyncApi;
   info: Info;
 
-  constructor(private asyncApiService: AsyncApiService) { }
+  constructor(private asyncApiService: AsyncApiService) {}
 
   ngOnInit(): void {
-    this.asyncApiService.getAsyncApi().subscribe(asyncapi => {
+    this.asyncApiService.getAsyncApi().subscribe((asyncapi) => {
       this.asyncApiData = asyncapi;
       this.info = asyncapi.info;
     });
@@ -31,5 +30,4 @@ export class InfoComponent implements OnInit {
 
     return false;
   }
-
 }
