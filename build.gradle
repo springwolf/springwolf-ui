@@ -17,7 +17,7 @@ node {
   download = true
 }
 
-  npm_run_build {
+npm_run_build {
   inputs.files fileTree("src")
   inputs.file 'angular.json'
   inputs.file 'package.json'
