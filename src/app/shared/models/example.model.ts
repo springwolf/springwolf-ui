@@ -1,5 +1,4 @@
 export class Example {
-
   public value: string;
   public lineCount: number;
 
@@ -7,5 +6,4 @@ export class Example {
     this.value = JSON.stringify(exampleObject, null, 2);
     this.lineCount = this.value.split('\n').length;
   }
-
 }

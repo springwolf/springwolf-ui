@@ -16,6 +16,18 @@ dependencies {
 
 After starting the application, visit: `localhost:8080/springwolf/asyncapi-ui.html`.
 
+## Contribution
+
+You are welcome to raise issues and contribute code.
+
+### Code contribution
+
+Just fork the project, write code and open a PR.
+
+This repository uses github actions. We recommend activating them in your fork and open a PR within your fork to trigger them.
+
+Also, to build a preview for your branch, you can sign up to [Netlify's](https://app.netlify.com) free tier with your github account, import a new site from your github fork and set the build command as described in `src/_redirects`. Open a PR in within your fork and update the code to trigger a build.
+
 ## Development
 1. Run `npm i`
 2. Run `ng serve`
@@ -26,6 +38,11 @@ The application renders content based on mock data in `src/app/shared/mock`.
 It contains multiple mocks - including the ones from the springwolf-core examples projects.
 
 To update the mock data, run `npm run update-mocks`.
+
+### Code Formatting
+
+The project uses spotless together with prettier for code formatting.
+Using the gradle task `spotlessApply`, the code is reformatted to match the style.
 
 ## Release
 

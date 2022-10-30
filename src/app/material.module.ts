@@ -13,21 +13,21 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 
 const modules = [
-    MatButtonModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatCardModule,
-    MatExpansionModule,
-    MatTabsModule,
-    MatDividerModule,
-    ClipboardModule,
-    MatSnackBarModule,
-    MatFormFieldModule,
-    MatSelectModule
-]
+  MatButtonModule,
+  MatIconModule,
+  MatToolbarModule,
+  MatCardModule,
+  MatExpansionModule,
+  MatTabsModule,
+  MatDividerModule,
+  ClipboardModule,
+  MatSnackBarModule,
+  MatFormFieldModule,
+  MatSelectModule,
+];
 
 @NgModule({
-    imports: modules,
-    exports: modules
+  imports: modules,
+  exports: modules,
 })
-export class MaterialModule { }
+export class MaterialModule {}
