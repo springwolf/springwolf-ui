@@ -24,11 +24,9 @@ jobs:
         run: ./gradlew build
 
 # prepare ui test
-      - name: Install Playwright Browsers
+      - name: Install Playwright E2E Browsers
         run: npx playwright install --with-deps
 
-      - name: Start application in the background
-        run: ./gradlew npm_run_start &
 # run ui tests
       - name: E2E
         run: ./gradlew npm_run_e2e
