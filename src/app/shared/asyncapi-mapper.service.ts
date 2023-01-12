@@ -1,10 +1,10 @@
-import { AsyncApi } from './models/asyncapi.model';
-import { Server } from './models/server.model';
-import {Channel, CHANNEL_ANCHOR_PREFIX, Message, Operation, OperationType} from './models/channel.model';
-import { Schema } from './models/schema.model';
-import { Injectable } from '@angular/core';
-import {Example} from "./models/example.model";
-import {Info} from "./models/info.model";
+import {AsyncApi} from './models/asyncapi.model';
+import {Server} from './models/server.model';
+import {Channel, CHANNEL_ANCHOR_PREFIX, Message, MessageBinding, Operation, OperationType} from './models/channel.model';
+import {Schema} from './models/schema.model';
+import {Injectable} from '@angular/core';
+import {Example} from './models/example.model';
+import {Info} from './models/info.model';
 
 interface ServerAsyncApiSchema {
   description?: string;
@@ -26,6 +26,10 @@ interface ServerAsyncApiMessage {
   description?: string;
   payload: { $ref: string };
   headers: { $ref: string };
+  bindings: {[key: string]: ServerAsyncApiMessageBinding};
+}
+interface ServerAsyncApiMessageBinding {
+  [key: string]: ServerAsyncApiSchema | string;
 }
 
 interface ServerAsyncApiInfo {
@@ -64,7 +68,7 @@ export interface ServerAsyncApi {
 
 @Injectable()
 export class AsyncApiMapperService {
-    static BASE_URL = window.location.pathname + window.location.search + "#";
+    static BASE_URL = window.location.pathname + window.location.search + '#';
 
     constructor() {
     }
@@ -89,49 +93,52 @@ export class AsyncApiMapperService {
       };
     }
 
-    private mapServers(servers: ServerAsyncApi["servers"]): Map<string, Server> {
+    private mapServers(servers: ServerAsyncApi['servers']): Map<string, Server> {
         const s = new Map<string, Server>();
         Object.entries(servers).forEach(([k, v]) => s.set(k, v));
         return s;
     }
 
-    private mapChannels(channels: ServerAsyncApi["channels"]): Channel[] {
+    private mapChannels(channels: ServerAsyncApi['channels']): Channel[] {
         const s = new Array<Channel>();
         Object.entries(channels).forEach(([k, v]) => {
-            const subscriberChannels = this.mapChannel(k, v.description, v.subscribe, "subscribe")
-            subscriberChannels.forEach(channel => s.push(channel))
+            const subscriberChannels = this.mapChannel(k, v.description, v.subscribe, 'subscribe');
+            subscriberChannels.forEach(channel => s.push(channel));
 
-            const publisherChannels = this.mapChannel(k, v.description, v.publish, "publish")
-            publisherChannels.forEach(channel => s.push(channel))
+            const publisherChannels = this.mapChannel(k, v.description, v.publish, 'publish');
+            publisherChannels.forEach(channel => s.push(channel));
         });
         return s;
     }
 
     private mapChannel(
         topicName: string,
-        description: ServerAsyncApi["channels"][""]["description"],
-        serverOperation: ServerAsyncApi["channels"][""]["subscribe"] | ServerAsyncApi["channels"][""]["publish"],
-        operationType: OperationType): Channel[]
+        description: ServerAsyncApi['channels']['']['description'],
+        serverOperation: ServerAsyncApi['channels']['']['subscribe'] | ServerAsyncApi['channels']['']['publish'],
+        operationType: OperationType
+    ): Channel[]
     {
-        if(serverOperation !== undefined) {
-            let messages: Message[] = this.mapMessages(serverOperation.message)
+        if (serverOperation !== undefined) {
+            const messages: Message[] = this.mapMessages(serverOperation.message);
 
             return messages.map(message => {
-                const operation = this.mapOperation(operationType, message, serverOperation.bindings)
+                const operation = this.mapOperation(operationType, message, serverOperation.bindings);
                 return {
                     name: topicName,
-                    anchorIdentifier: CHANNEL_ANCHOR_PREFIX + [operation.protocol, topicName, operation.operation, operation.message.title].join( "-"),
-                    description: description,
-                    operation: operation,
-                }
-            })
+                    anchorIdentifier: CHANNEL_ANCHOR_PREFIX + [
+                      operation.protocol, topicName, operation.operation, operation.message.title
+                    ].join( '-'),
+                    description,
+                    operation,
+                };
+            });
         }
         return [];
     }
 
     private mapMessages(message: ServerAsyncApiChannelMessage): Message[] {
-      if('oneOf' in message) {
-        return this.mapServerAsyncApiMessages(message.oneOf)
+      if ('oneOf' in message) {
+        return this.mapServerAsyncApiMessages(message.oneOf);
       }
       return this.mapServerAsyncApiMessages([message]);
     }
@@ -144,23 +151,50 @@ export class AsyncApiMapperService {
           description: v.description,
           payload: {
             name: v.payload.$ref,
-            anchorUrl: AsyncApiMapperService.BASE_URL  +v.payload.$ref?.split('/')?.pop()
+            anchorUrl: AsyncApiMapperService.BASE_URL  + v.payload.$ref?.split('/')?.pop()
           },
           headers: {
             name: v.headers.$ref,
             anchorUrl: AsyncApiMapperService.BASE_URL + v.headers.$ref?.split('/')?.pop()
-          }
-        }
-      })
+          },
+          bindings: this.mapServerAsyncApiMessageBindings(v.bindings)
+        };
+      });
     }
 
-    private mapOperation(operationType: OperationType, message: Message, bindings?: any): Operation {
+  private mapServerAsyncApiMessageBindings(
+    serverMessageBindings: { [type: string]: ServerAsyncApiMessageBinding }
+  ): Map<string, MessageBinding> {
+      const messageBindings = new Map<string, MessageBinding>();
+      Object.keys(serverMessageBindings).forEach((protocol) => {
+        messageBindings.set(protocol, this.mapServerAsyncApiMessageBinding(serverMessageBindings[protocol]));
+      });
+      return messageBindings;
+  }
+
+  private mapServerAsyncApiMessageBinding(serverMessageBinding: ServerAsyncApiMessageBinding): MessageBinding {
+      const messageBinding: MessageBinding = {};
+
+      Object.keys(serverMessageBinding).forEach((key) => {
+        const value = serverMessageBinding[key];
+        if (typeof value === 'object') {
+          messageBinding[key] = this.mapSchema('MessageBinding', value);
+        } else {
+          messageBinding[key] = value;
+        }
+      });
+
+      return messageBinding;
+  }
+
+
+  private mapOperation(operationType: OperationType, message: Message, bindings?: any): Operation {
         return {
             protocol: this.getProtocol(bindings),
             operation: operationType,
-            message: message,
-            bindings: bindings
-        }
+            message,
+            bindings
+        };
     }
 
     private getProtocol(bindings?: any): string {
@@ -184,12 +218,12 @@ export class AsyncApiMapperService {
         anchorIdentifier: '#' + schemaName,
         anchorUrl: anchorUrl,
         type: schema.type,
-        items: items,
+        items,
         format: schema.format,
         enum: schema.enum,
-        properties: properties,
+        properties,
         required: schema.required,
-        example: example,
-      }
+        example,
+      };
     }
 }

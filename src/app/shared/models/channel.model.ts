@@ -1,3 +1,5 @@
+import {Schema} from './schema.model';
+
 export const CHANNEL_ANCHOR_PREFIX = "#channel-"
 export interface Channel {
     name: string;
@@ -26,4 +28,9 @@ export interface Message {
       name: string
       anchorUrl: string;
     };
+    bindings?: Map<string, MessageBinding>;
+}
+
+export interface MessageBinding {
+  [type: string]: string | Schema;
 }
