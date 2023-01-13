@@ -163,12 +163,14 @@ export class AsyncApiMapperService {
     }
 
   private mapServerAsyncApiMessageBindings(
-    serverMessageBindings: { [type: string]: ServerAsyncApiMessageBinding }
+    serverMessageBindings?: { [type: string]: ServerAsyncApiMessageBinding }
   ): Map<string, MessageBinding> {
       const messageBindings = new Map<string, MessageBinding>();
-      Object.keys(serverMessageBindings).forEach((protocol) => {
-        messageBindings.set(protocol, this.mapServerAsyncApiMessageBinding(serverMessageBindings[protocol]));
-      });
+      if (serverMessageBindings !== undefined) {
+        Object.keys(serverMessageBindings).forEach((protocol) => {
+          messageBindings.set(protocol, this.mapServerAsyncApiMessageBinding(serverMessageBindings[protocol]));
+        });
+      }
       return messageBindings;
   }
 
