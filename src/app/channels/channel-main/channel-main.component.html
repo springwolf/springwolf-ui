@@ -7,7 +7,7 @@
     <mat-tab-group animationDuration="0ms">
       <mat-tab label="Example">
         <div fxLayout="column">
-          <div *ngIf="isEmptyObject(operation.message.bindings.get(protocolName))" fxLayout="column" fxLayoutGap="5px">
+          <div [hidden]="isEmptyObject(operation.message.bindings.get(protocolName))" fxLayout="column" fxLayoutGap="5px">
             <h4>Binding</h4>
             <textarea spellcheck="false"
                       #bindingTextArea
@@ -16,14 +16,16 @@
                       (keyup)="recalculateLineCount('massageBindingExample', bindingTextArea.value)"
             ></textarea>
           </div>
-          <div *ngIf="headers" fxLayout="column" fxLayoutGap="0px">
-            <h4>Header</h4>
-            <textarea spellcheck="false"
-                      #headersTextArea
-                      [rows]="headersTextAreaLineCount"
-                      [value]="headersExample?.value"
-                      (keyup)="recalculateLineCount('headers', headersTextArea.value)"
-            ></textarea>
+          <div [hidden]="!(headersExample?.lineCount > 1)" fxLayout="column" fxLayoutGap="0px">
+
+              <h4>Header</h4>
+              <textarea spellcheck="false"
+                        #headersTextArea
+                        [rows]="headersTextAreaLineCount"
+                        [value]="headersExample?.value"
+                        (keyup)="recalculateLineCount('headers', headersTextArea.value)"
+              ></textarea>
+
           </div>
           <div fxLayout="column" fxLayoutGap="5px">
             <h4>Message</h4>
@@ -35,11 +37,18 @@
             ></textarea>
           </div>
           <div fxLayout fxLayoutGap="8px">
-            <button mat-raised-button color="primary" (click)="publish(messageTextArea.value, headersTextArea?.value)">
+            <button mat-raised-button color="primary"
+                    (click)="publish(messageTextArea.value, headersTextArea?.value, bindingTextArea?.value)">
               Publish
             </button>
             <button mat-raised-button color="primary"
-                    (click)="messageTextArea.value = defaultExample.value; exampleTextAreaLineCount=defaultExample.lineCount">
+                    (click)="
+                    messageTextArea.value = defaultExample.value;
+                    exampleTextAreaLineCount = defaultExample.lineCount || 0;
+                    headersTextArea.value = headersExample?.value;
+                    headersTextAreaLineCount = headersExample?.lineCount || 0;
+                    bindingTextArea.value = createMessageBindingExample(operation.message.bindings.get(protocolName))?.value;
+                    messageBindingExampleTextAreaLineCount = messageBindingExample?.lineCount || 0">
               Default
             </button>
             <button mat-raised-button color="primary" [cdkCopyToClipboard]="messageTextArea.value">Copy</button>

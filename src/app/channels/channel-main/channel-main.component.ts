@@ -29,7 +29,6 @@ export class ChannelMainComponent implements OnInit {
   protocolName: string;
   messageBindingExample?: Example;
   messageBindingExampleTextAreaLineCount: number;
-  headersTextArea?: HTMLTextAreaElement;
 
   constructor(
     private asyncApiService: AsyncApiService,
@@ -60,7 +59,7 @@ export class ChannelMainComponent implements OnInit {
   }
 
   isEmptyObject(object?: any): boolean {
-    return (object === undefined || object === null) || Object.keys(object).length > 0;
+    return (object === undefined || object === null) || Object.keys(object).length === 0;
   }
 
   createMessageBindingExample(messageBinding?: MessageBinding): Example | undefined {
@@ -104,12 +103,13 @@ export class ChannelMainComponent implements OnInit {
     }
   }
 
-  publish(example: string, headers?: string): void {
+  publish(example: string, headers?: string, bindings?: string): void {
     try {
       const payloadJson = JSON.parse(example);
       const headersJson = JSON.parse(headers);
+      const bindingsJson = JSON.parse(bindings);
 
-      this.publisherService.publish(this.protocolName, this.channelName, payloadJson, headersJson).subscribe(
+      this.publisherService.publish(this.protocolName, this.channelName, payloadJson, headersJson, bindingsJson).subscribe(
         _ => this.handlePublishSuccess(),
         err => this.handlePublishError(err)
       );
