@@ -27,6 +27,17 @@ It contains multiple mocks - including the ones from the springwolf-core example
 
 To update the mock data, run `npm run update-mocks`.
 
+## E2E tests
+
+E2E tests are written with [playwright](https://playwright.dev).
+
+Execute them with: `npm run test`
+(This starts the angular dev server in the background as defined in `playwright.config.ts` in the `webServer` section)
+
+During development of test you might find the codegen feature useful:
+`npx playwright codegen localhost:4200`
+(This assumes that the angular dev server is running `npm run start`)
+
 ## Release
 
 Releasing is done by running the gradle task `publish`. For local development, use `publishToMavenLocal`.

@@ -4,7 +4,7 @@ export interface Schema {
     name?: string;
     description?: string;
 
-    anchorIdentifier?: string;
+    anchorIdentifier: string;
     anchorUrl?: string;
 
     type?: string;
