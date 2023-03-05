@@ -12,12 +12,12 @@ version = '0.6.0' + (isSnapshot ? '-SNAPSHOT' : '')
 sourceCompatibility = '1.8'
 
 node {
-  version = '12.18.1'
-  npmVersion = '6.14.5'
+  version = '18.14.2'
+  npmVersion = '9.5.0'
   download = true
 }
 
-npm_run_build {
+  npm_run_build {
   inputs.files fileTree("src")
   inputs.file 'angular.json'
   inputs.file 'package.json'
