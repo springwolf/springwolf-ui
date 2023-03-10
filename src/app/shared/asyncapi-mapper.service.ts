@@ -26,10 +26,10 @@ interface ServerAsyncApiMessage {
   description?: string;
   payload: { $ref: string };
   headers: { $ref: string };
-  bindings: {[key: string]: ServerAsyncApiMessageBinding};
+  bindings: {[protocol: string]: ServerAsyncApiMessageBinding};
 }
 interface ServerAsyncApiMessageBinding {
-  [key: string]: ServerAsyncApiSchema | string;
+  [protocol: string]: ServerAsyncApiSchema | string;
 }
 
 interface ServerAsyncApiInfo {
@@ -43,7 +43,7 @@ export interface ServerAsyncApi {
     asyncapi: string;
     info: ServerAsyncApiInfo;
     servers: {
-        [key: string]: {
+        [server: string]: {
             url: string;
             protocol: string;
         };
@@ -53,11 +53,11 @@ export interface ServerAsyncApi {
             description?: string;
             subscribe?: {
                 message: ServerAsyncApiChannelMessage;
-                bindings?: any;
+                bindings?: {[protocol: string]: object};
             };
             publish?: {
                 message: ServerAsyncApiChannelMessage;
-                bindings?: any;
+                bindings?: {[protocol: string]: object};
             };
         };
     };
@@ -157,13 +157,14 @@ export class AsyncApiMapperService {
             name: v.headers.$ref,
             anchorUrl: AsyncApiMapperService.BASE_URL + v.headers.$ref?.split('/')?.pop()
           },
-          bindings: this.mapServerAsyncApiMessageBindings(v.bindings)
+          bindings: this.mapServerAsyncApiMessageBindings(v.bindings),
+          rawBindings: v.bindings,
         };
       });
     }
 
   private mapServerAsyncApiMessageBindings(
-    serverMessageBindings?: { [type: string]: ServerAsyncApiMessageBinding }
+    serverMessageBindings?: { [protocol: string]: ServerAsyncApiMessageBinding }
   ): Map<string, MessageBinding> {
       const messageBindings = new Map<string, MessageBinding>();
       if (serverMessageBindings !== undefined) {
@@ -190,7 +191,7 @@ export class AsyncApiMapperService {
   }
 
 
-  private mapOperation(operationType: OperationType, message: Message, bindings?: any): Operation {
+  private mapOperation(operationType: OperationType, message: Message, bindings?: {[protocol: string]: object}): Operation {
         return {
             protocol: this.getProtocol(bindings),
             operation: operationType,
@@ -199,7 +200,7 @@ export class AsyncApiMapperService {
         };
     }
 
-    private getProtocol(bindings?: any): string {
+    private getProtocol(bindings?: {[protocol: string]: object}): string {
         return Object.keys(bindings)[0];
     }
 

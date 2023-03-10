@@ -80,7 +80,7 @@
         <app-json [data]="operation.bindings[protocolName]"></app-json>
       </mat-tab>
       <mat-tab label="Message Bindings">
-        <app-json [data]="operation.message.bindings.get(protocolName)"></app-json>
+        <app-json [data]="operation.message.rawBindings[protocolName]"></app-json>
       </mat-tab>
     </mat-tab-group>
 </section>
