@@ -64,7 +64,7 @@ publishing {
       pom {
         name = 'springwolf-ui'
         description = 'Web UI for Springwolf'
-        url = 'https://springwolf.github.io'
+        url = 'https://github.com/springwolf/springwolf-core'
 
         licenses {
           license {
